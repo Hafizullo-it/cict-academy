@@ -1,0 +1,1034 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07070d">
+<meta name="format-detection" content="telephone=no">
+<title>CICT Academy — сайт, который строят ИИ-агенты</title>
+<meta property="og:title" content="CICT Academy — этот сайт строят ИИ-агенты">
+<meta property="og:description" content="Образовательный центр IT-направлений: Frontend, Backend, Python, кибербезопасность, Scratch, Robotech и не только.">
+<meta property="og:type" content="website">
+<meta name="description" content="CICT Academy — образовательный центр IT-направлений: Frontend, Backend, Python, кибербезопасность, Scratch, робототехника, математика, языки, шахматы.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cpath d='M60 8L105 34V86L60 112L15 86V34Z' fill='%2307070d' stroke='%238b5cf6' stroke-width='8'/%3E%3Cpath d='M80 44A24 24 0 1 0 80 76' fill='none' stroke='%2322d3ee' stroke-width='9' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --bg:#07070d; --bg2:#0d0d18; --card:#11111f; --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+  --text:#eeecf8; --muted:#9b99b3;
+  --violet:#8b5cf6; --cyan:#22d3ee; --lime:#a3e635; --pink:#f472b6; --amber:#fbbf24; --teal:#5eead4;
+  --grad:linear-gradient(100deg,#22d3ee 0%,#8b5cf6 50%,#f472b6 100%);
+  --display:'Unbounded',system-ui,sans-serif; --body:'Manrope',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  --r:22px;
+  --paper:#fafaf7; --skel:255,255,255; --wire:rgba(255,255,255,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+h1,h2,h3,p{overflow-wrap:break-word}
+body.booting{overflow:hidden}
+/* blank white page → Theme·Agent paints every section's background */
+[data-sec]{transition:color .9s ease}
+[data-sec]:not(.built){--skel:0,0,0;--wire:rgba(0,0,0,.22);color:#17171f}
+.paint{position:absolute;inset:0;z-index:0;pointer-events:none;clip-path:inset(0 100% 0 0);
+  background:
+   radial-gradient(900px 600px at var(--gx,85%) var(--gy,0%),rgba(139,92,246,.18),transparent 60%),
+   radial-gradient(700px 500px at var(--hx,0%) 60%,rgba(34,211,238,.10),transparent 60%),
+   linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px) 0 0/48px 48px,
+   linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/48px 48px,
+   var(--bg)}
+.built > .paint{clip-path:none}
+[data-sec]:not(.built) .logo-stage{background:transparent;border:1px dashed var(--wire);box-shadow:none}
+[data-sec]:not(.built) .logo-stage .stage-head{opacity:0}
+.mq-track{z-index:1}
+.mq-track:not(.built) span{opacity:0}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto;position:relative;z-index:1}
+section{position:relative;z-index:1;padding:110px 0}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);display:inline-flex;gap:10px;align-items:center}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.02em;line-height:1.08}
+h2{font-size:clamp(30px,4.6vw,58px);margin:18px 0 22px}
+.lead{color:var(--muted);font-size:clamp(17px,1.6vw,20px);max-width:720px}
+
+/* ---------- build system ---------- */
+[data-b="block"]{position:relative}
+[data-b="block"]:not(.built){background:transparent!important;border-color:transparent!important;box-shadow:none!important;outline:1px dashed var(--wire);outline-offset:-1px}
+[data-b="block"][data-name]:not(.built)::before{content:attr(data-name);position:absolute;top:8px;left:10px;font:500 10px/1 var(--mono);color:rgba(var(--skel),.32);letter-spacing:.06em;z-index:2}
+[data-b="block"]:not(.built) .deco{opacity:0;transform:scale(.96)}
+[data-b="block"] .deco{transition:opacity .6s ease,transform .6s ease}
+[data-b="block"]{transition:background .6s ease,border-color .6s ease,box-shadow .6s ease,outline-color .4s}
+[data-b="block"].built{outline-color:transparent}
+.scan{position:absolute;inset:0;pointer-events:none;border-radius:inherit;overflow:hidden;z-index:3}
+.scan::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-40%;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--ac) 40%,transparent),transparent);
+  border-right:2px solid var(--ac);box-shadow:0 0 24px var(--ac);animation:scan var(--d,800ms) linear forwards}
+@keyframes scan{to{left:100%}}
+.ghost{color:transparent;border-radius:.25em;-webkit-box-decoration-break:clone;box-decoration-break:clone;
+  background:linear-gradient(90deg,rgba(var(--skel),.06) 0%,rgba(var(--skel),.13) 50%,rgba(var(--skel),.06) 100%);background-size:200% 100%;animation:shim 1.5s linear infinite}
+@keyframes shim{from{background-position:200% 0}to{background-position:-0% 0}}
+.caret{display:inline-block;width:2px;height:1em;background:var(--ac);vertical-align:-.12em;margin:0 1px;box-shadow:0 0 10px var(--ac);animation:blink .7s steps(2) infinite}
+@keyframes blink{50%{opacity:.2}}
+[data-b="type"].built{animation:settle .5s ease}
+@keyframes settle{from{filter:brightness(1.8) drop-shadow(0 0 8px var(--ac,#fff))}}
+
+/* ---------- agents ---------- */
+#agents{position:fixed;inset:0;pointer-events:none;z-index:80}
+.agent{position:absolute;left:0;top:0;will-change:transform;transition:opacity .4s}
+.agent svg{width:22px;height:22px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6)) drop-shadow(0 0 8px var(--c))}
+.agent svg path{fill:var(--c);stroke:#fff;stroke-width:1.4}
+.agent .tag{position:absolute;left:18px;top:18px;background:var(--c);color:#07070d;border-radius:4px 10px 10px 10px;padding:4px 9px 5px;white-space:nowrap;font:700 11px/1.2 var(--mono);box-shadow:0 6px 20px rgba(0,0,0,.45)}
+.agent .tag span{display:block;font-weight:500;opacity:.78;font-size:10px;max-width:190px;overflow:hidden;text-overflow:ellipsis}
+.agent.flip .tag{left:auto;right:4px;border-radius:10px 4px 10px 10px}
+.ripple{position:fixed;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:2px solid var(--c);pointer-events:none;z-index:79;animation:rip .6s ease-out forwards}
+@keyframes rip{from{transform:scale(.2);opacity:1}to{transform:scale(1.6);opacity:0}}
+
+/* ---------- boot ---------- */
+#boot{position:fixed;inset:0;z-index:100;background:#05050a;display:grid;place-items:center;padding:16px;transition:opacity .7s ease,visibility .7s}
+#boot.gone{opacity:0;visibility:hidden}
+.boot-box{width:min(680px,100%);background:#0b0b14;border:1px solid var(--line2);border-radius:16px;overflow:hidden;box-shadow:0 30px 120px rgba(139,92,246,.25)}
+.boot-head{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font:500 12px var(--mono);color:var(--muted)}
+.boot-head i{width:11px;height:11px;border-radius:50%;background:#ff5f57}.boot-head i:nth-child(2){background:#febc2e}.boot-head i:nth-child(3){background:#28c840}
+.boot-head span{margin-left:10px}
+#bootlog{font:13.5px/1.75 var(--mono);padding:20px 22px;min-height:290px;white-space:pre-wrap;color:#cfcde6}
+#bootlog .ok{color:var(--lime)} #bootlog .dim{color:var(--muted)}
+#skip{display:block;width:100%;background:none;border:0;border-top:1px solid var(--line);color:var(--muted);font:500 12px var(--mono);padding:12px;cursor:pointer}
+#skip:hover{color:var(--text);background:rgba(255,255,255,.03)}
+
+/* ---------- HUD ---------- */
+.hud{position:fixed;left:16px;bottom:16px;z-index:70;width:340px;background:rgba(10,10,20,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line2);border-radius:16px;padding:12px 14px;font:12px/1.5 var(--mono);box-shadow:0 20px 60px rgba(0,0,0,.5);transition:border-color .5s}
+.hud-top{display:flex;align-items:center;gap:8px;color:var(--muted)}
+.hud-top .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:blink 1s steps(2) infinite}
+.hud-top b{margin-left:auto;color:var(--text)}
+.hud.done{border-color:rgba(163,230,53,.5)} .hud.done .dot{background:var(--lime);box-shadow:0 0 10px var(--lime);animation:none}
+.bar{height:4px;background:rgba(255,255,255,.08);border-radius:4px;margin:9px 0;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--grad);transition:width .4s ease}
+#log{list-style:none;display:flex;flex-direction:column;gap:3px;max-height:130px;overflow:hidden}
+#log li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#bdbbd3;animation:li .35s ease}
+#log li:not(:first-child){opacity:.6}
+@keyframes li{from{opacity:0;transform:translateY(-6px)}}
+#hurry{margin-top:8px;background:none;border:0;color:var(--muted);font:500 11px var(--mono);cursor:pointer;padding:0;text-decoration:underline dotted}
+#hurry:hover{color:var(--text)}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:12px;z-index:50;margin:12px auto 0;width:min(1200px,100% - 32px);display:flex;align-items:center;gap:24px;padding:10px 12px 10px 16px;border-radius:18px;background:rgba(13,13,24,.72);border:1px solid var(--line2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:.02em}
+.brand svg{width:34px;height:34px}
+.brand small{display:block;font:500 9px/1 var(--mono);letter-spacing:.3em;color:var(--muted);margin-top:3px}
+.nav nav{display:flex;gap:22px;margin-left:auto;font-size:14px;color:var(--muted)}
+.nav nav a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:15px;padding:14px 22px;border-radius:14px;border:1px solid var(--line2);background:rgba(255,255,255,.04);transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer;color:var(--text)}
+.btn.primary{background:var(--grad);border-color:transparent;color:#07070d;box-shadow:0 10px 40px rgba(139,92,246,.35)}
+@media (hover:hover){
+  .btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.08)}
+  .btn.primary:hover{box-shadow:0 14px 50px rgba(139,92,246,.55);background:var(--grad)}
+}
+.btn:active{transform:scale(.97)}
+.burger{display:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.04);cursor:pointer;flex-direction:column;justify-content:center;align-items:center;gap:6px}
+.burger i{display:block;width:18px;height:2px;border-radius:2px;background:var(--text);transition:transform .3s}
+.nav.open .burger i:first-child{transform:translateY(4px) rotate(45deg)}
+.nav.open .burger i:last-child{transform:translateY(-4px) rotate(-45deg)}
+.btn.sm{padding:10px 16px;font-size:13px;border-radius:12px}
+
+/* ---------- hero ---------- */
+.hero{padding:70px 0 90px;min-height:calc(100vh - 80px);min-height:calc(100svh - 80px);display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-bg canvas{width:100%;height:100%;display:block}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(38px,6vw,82px);margin:22px 0 26px;font-weight:800}
+.hero h1 > span{display:block}
+.hero .lead{margin-bottom:34px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:44px}
+.stat{padding:16px 18px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.stat b{display:block;font-family:var(--display);font-size:26px}
+.stat span{font-size:13px;color:var(--muted);line-height:1.35;display:block}
+
+.logo-stage{background:linear-gradient(180deg,#12121f,#0b0b15);border:1px solid var(--line2);border-radius:26px;overflow:hidden;box-shadow:0 40px 120px rgba(139,92,246,.18)}
+.stage-head{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font:500 12px var(--mono);color:var(--muted)}
+.stage-head i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15)}
+.stage-head em{margin-left:auto;font-style:normal;color:var(--violet)}
+.stage-body{position:relative;aspect-ratio:1/1;display:grid;place-items:center;background:
+  linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px) 0 0/24px 24px}
+.mark{width:62%;overflow:visible}
+.mark path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.mark .draft path{stroke:rgba(255,255,255,.55);stroke-width:2.5}
+.mark .draft path.x{stroke:#ff5f6d;stroke-width:3.5}
+.mark .final path{stroke:url(#lg);stroke-width:6}
+.mark .final path.thin{stroke-width:3.5}
+.mark .hexfill{fill:url(#lg);opacity:0;transition:opacity 1s}
+.logo-stage.built .final path{stroke-dashoffset:0}
+.logo-stage.built .draft{display:none}
+.logo-stage.built .hexfill{opacity:.12}
+.logo-stage.built .mark{filter:drop-shadow(0 0 22px rgba(139,92,246,.55))}
+.wordmark{position:absolute;bottom:7%;left:0;right:0;text-align:center;opacity:0;transform:translateY(10px);transition:.8s ease}
+.logo-stage.built .wordmark{opacity:1;transform:none}
+.wordmark b{display:block;font:800 clamp(30px,4vw,44px)/1 var(--display);letter-spacing:.06em}
+.wordmark span{font:500 12px var(--mono);letter-spacing:.6em;color:var(--muted);padding-left:.6em}
+.stage-cap{position:absolute;top:14px;left:16px;font:500 11px var(--mono);color:var(--muted)}
+
+/* ---------- marquee ---------- */
+.marquee{padding:0;overflow:hidden;border-block:1px solid var(--line);background:rgba(255,255,255,.015)}
+.mq-track{display:flex;gap:46px;width:max-content;padding:26px 0;animation:mq 38s linear infinite}
+.mq-track span{font:700 clamp(20px,2.6vw,32px) var(--display);color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.35);white-space:nowrap}
+.mq-track span:nth-child(3n+1){color:var(--text);-webkit-text-stroke:0}
+.mq-track span.st{color:var(--violet);-webkit-text-stroke:0}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- manifesto ---------- */
+.big-quote{font:700 clamp(26px,3.6vw,46px)/1.22 var(--display);letter-spacing:-.02em;max-width:1000px;margin:20px 0 26px}
+.era{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:54px}
+.era-card{padding:30px 28px 32px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);min-height:250px;display:flex;flex-direction:column}
+.era-card .k{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.era-card h3{font-size:24px;margin:16px 0 12px}
+.era-card p{color:var(--muted)}
+.era-card.hl{background:linear-gradient(160deg,rgba(139,92,246,.22),rgba(34,211,238,.08) 60%,var(--card));border-color:rgba(139,92,246,.45)}
+.era-card .num{margin-top:auto;padding-top:24px;font:800 54px/1 var(--display);color:rgba(255,255,255,.06)}
+
+/* ---------- courses ---------- */
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{font:600 13px var(--body);color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:9px 16px;border-radius:999px;cursor:pointer;transition:.2s}
+.filters button.on,.filters button:hover{color:#07070d;background:var(--text)}
+.courses{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+.course{--cc:var(--violet);padding:24px 22px 26px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);transition:transform .3s,border-color .3s,opacity .3s,background .6s;min-height:228px;overflow:hidden}
+@media (hover:hover){.course.built:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--cc) 60%,transparent)}}
+.course .c-ico{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--cc) 16%,transparent);color:var(--cc);margin-bottom:22px}
+.course .c-ico svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.course .c-tag{position:absolute;top:22px;right:20px;font:600 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cc);border:1px solid color-mix(in srgb,var(--cc) 40%,transparent);padding:4px 8px;border-radius:999px}
+.course h3{font-size:21px;margin-bottom:10px}
+.course p{color:var(--muted);font-size:15px;line-height:1.5}
+.course.wide{grid-column:span 2}
+.course.hide{display:none}
+.course::after{content:"";position:absolute;width:180px;height:180px;right:-60px;bottom:-80px;border-radius:50%;background:var(--cc);filter:blur(70px);opacity:0;transition:opacity .6s}
+.course.built::after{opacity:.16}
+
+/* ---------- agents room ---------- */
+.room{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:48px}
+.panel{border-radius:var(--r);background:var(--card);border:1px solid var(--line);overflow:hidden}
+.panel-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);font:500 12px var(--mono);color:var(--muted)}
+.panel-head .live{margin-left:auto;color:var(--lime);display:flex;align-items:center;gap:6px}
+.panel-head .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
+.chat{padding:20px;display:flex;flex-direction:column;gap:12px}
+.msg{--mc:var(--cyan);display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+.msg .av{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--mc) 22%,transparent);color:var(--mc);font:700 13px var(--mono)}
+.msg b{display:block;font:700 12px var(--mono);color:var(--mc);margin-bottom:2px}
+.msg p{font-size:15px;line-height:1.5;color:#d6d4ea}
+.code{margin:0;padding:22px 22px 26px;font:14px/1.75 var(--mono);color:#d6d4ea;overflow-x:auto;counter-reset:ln}
+.code .ln{display:block;min-height:1.75em;white-space:pre;padding-left:40px;position:relative}
+.code .ln::before{counter-increment:ln;content:counter(ln);position:absolute;left:0;width:24px;text-align:right;color:rgba(255,255,255,.2)}
+.tk-k{color:#c4a1ff}.tk-s{color:#a3e635}.tk-f{color:#22d3ee}.tk-c{color:#6b6987;font-style:italic}.tk-n{color:#fbbf24}
+.build-ok{display:flex;align-items:center;gap:10px;margin:0 20px 20px;padding:12px 16px;border-radius:12px;background:rgba(163,230,53,.08);border:1px solid rgba(163,230,53,.3);color:var(--lime);font:600 13px var(--mono)}
+
+/* ---------- path ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:50px;counter-reset:st}
+.step{padding:28px 24px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);min-height:240px}
+.step .n{font:800 15px var(--mono);width:44px;height:44px;display:grid;place-items:center;border-radius:12px;border:1px solid var(--line2);margin-bottom:26px;color:var(--cyan)}
+.step h3{font-size:20px;margin-bottom:10px}
+.step p{color:var(--muted);font-size:15px}
+.step-line{height:2px;margin-top:-2px;background:var(--grad);transform-origin:left;transform:scaleX(0);transition:transform 1.4s ease}
+.steps-wrap.built .step-line{transform:none}
+
+/* ---------- CTA ---------- */
+.cta-box{border-radius:32px;padding:clamp(36px,6vw,80px);background:radial-gradient(600px 300px at 80% 0%,rgba(244,114,182,.25),transparent 60%),radial-gradient(600px 400px at 0% 100%,rgba(34,211,238,.18),transparent 60%),#10101d;border:1px solid var(--line2);overflow:hidden;text-align:center}
+.cta-box h2{font-size:clamp(34px,6vw,76px);margin:18px auto 20px}
+.cta-box .lead{margin:0 auto 34px}
+.cta-box .cta-row{justify-content:center}
+.contacts{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 26px;margin-top:34px;font:500 13px var(--mono);color:var(--muted)}
+.contacts a:hover{color:var(--text)}
+
+footer{position:relative;z-index:1;padding:40px 0 130px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.foot .mono{font-family:var(--mono);font-size:12.5px}
+#rebuild{background:none;border:1px solid var(--line2);color:var(--text);font:600 12px var(--mono);padding:9px 14px;border-radius:10px;cursor:pointer}
+#rebuild:hover{background:rgba(255,255,255,.06)}
+
+/* ---------- responsive ---------- */
+.agent .tag{transition:opacity .3s}
+@media (max-width:1000px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .logo-stage{order:-1;max-width:420px;width:100%;margin:0 auto}
+  .courses{grid-template-columns:repeat(2,1fr)}
+  .room{grid-template-columns:1fr}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .era{grid-template-columns:1fr}
+  .era-card{min-height:0}
+}
+@media (max-width:720px){
+  body{font-size:16px}
+  section{padding:72px 0}
+  .wrap{width:calc(100% - 32px)}
+  /* nav + burger menu */
+  .nav{top:8px;margin-top:8px;width:calc(100% - 16px);padding:8px 8px 8px 12px;gap:8px}
+  .nav .btn{margin-left:auto}
+  .burger{display:flex}
+  .eyebrow{font-size:11px;letter-spacing:.08em}
+  .eyebrow::before{width:18px}
+  .nav nav{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;gap:0;padding:8px;border-radius:18px;background:#0d0d18;box-shadow:0 24px 60px rgba(0,0,0,.6);border:1px solid var(--line2);font-size:17px;color:var(--text)}
+  .nav nav a{padding:14px 12px;border-radius:12px}
+  .nav nav a:active{background:rgba(255,255,255,.06)}
+  .nav.open nav{display:flex}
+  /* hero: logo drawn first, on screen */
+  .hero{min-height:0;padding:28px 0 64px}
+  .logo-stage{max-width:300px;border-radius:22px}
+  .hero h1{font-size:clamp(28px,8.4vw,44px);margin:16px 0 18px}
+  .cta-row .btn{flex:1 1 100%;justify-content:center;padding:16px 20px}
+  .stats{grid-template-columns:1fr 1fr;margin-top:32px}
+  .stats .stat:last-child{grid-column:span 2}
+  .big-quote{font-size:clamp(22px,6.6vw,30px)}
+  .era{margin-top:36px}
+  .era-card{padding:24px 22px}
+  .filters{width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .filters::-webkit-scrollbar{display:none}
+  .filters button{flex:none;padding:10px 18px}
+  .courses{grid-template-columns:1fr;margin-top:28px}
+  .course{min-height:0}
+  .course.wide{grid-column:auto}
+  .steps{grid-template-columns:1fr}
+  .step{min-height:0}
+  .chat{padding:14px}
+  .msg p{font-size:14.5px}
+  .code{font-size:12px;padding:16px 14px 20px}
+  .code .ln{white-space:pre-wrap;padding-left:28px}
+  .build-ok{margin:0 14px 14px;font-size:12px}
+  .cta-box{padding:40px 20px;border-radius:24px}
+  .cta-box h2{font-size:clamp(28px,8.6vw,44px)}
+  .contacts{flex-direction:column;align-items:center}
+  footer{padding-bottom:110px}
+  .foot{flex-direction:column;align-items:flex-start}
+  /* compact HUD at bottom, respects iPhone home bar */
+  .hud{left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));width:auto;padding:9px 12px;border-radius:14px;transition:transform .5s ease,opacity .5s,border-color .5s}
+  .hud .bar{margin:7px 0 0}
+  #log{display:none}
+  #hurry{position:absolute;top:8px;right:60px;margin:0}
+  .hud.hidden{transform:translateY(160%);opacity:0;pointer-events:none}
+  /* smaller agents; idle ones park at the edge without labels */
+  .agent svg{width:18px;height:18px}
+  .agent .tag{font-size:10px;padding:3px 7px;left:14px;top:14px}
+  .agent .tag span{display:none}
+  .agent.idle .tag{opacity:0}
+  .agent.idle svg{opacity:.5}
+  #bootlog{font-size:12px;padding:16px;min-height:250px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .mq-track{animation:none}
+}
+</style>
+</head>
+<body class="booting">
+
+<!-- ========== BOOT ========== -->
+<div id="boot" aria-hidden="true">
+  <div class="boot-box">
+    <div class="boot-head"><i></i><i></i><i></i><span>cict-swarm — терминал</span></div>
+    <pre id="bootlog"></pre>
+    <button id="skip" type="button">Пропустить анимацию → показать сайт сразу</button>
+  </div>
+</div>
+
+<div id="agents" aria-hidden="true"></div>
+
+<aside class="hud" id="hud" aria-live="polite">
+  <div class="hud-top"><span class="dot"></span> agents.log <b id="pct">0%</b></div>
+  <div class="bar"><i id="bar"></i></div>
+  <ol id="log"></ol>
+  <button id="hurry" type="button">достроить всё сразу ⚡</button>
+</aside>
+
+<!-- ========== NAV ========== -->
+<header class="nav" data-sec data-b="block" data-name="nav" data-agent="ui">
+  <a class="brand deco" href="#top" aria-label="CICT Academy">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="lgm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#8b5cf6"/><stop offset="1" stop-color="#f472b6"/></linearGradient></defs><path d="M60 8L105 34V86L60 112L15 86V34Z" fill="rgba(139,92,246,.12)" stroke="url(#lgm)" stroke-width="7" stroke-linejoin="round"/><path d="M80 44A24 24 0 1 0 80 76" fill="none" stroke="url(#lgm)" stroke-width="8" stroke-linecap="round"/><path d="M60 50V70" stroke="url(#lgm)" stroke-width="7" stroke-linecap="round"/></svg>
+    <span>CICT<small>ACADEMY</small></span>
+  </a>
+  <nav class="deco">
+    <a href="#manifest">Эпоха агентов</a>
+    <a href="#courses">Направления</a>
+    <a href="#room">Как строился сайт</a>
+    <a href="#path">Обучение</a>
+  </nav>
+  <a class="btn sm primary deco" href="#contact">Записаться</a>
+  <button class="burger deco" type="button" aria-label="Меню" aria-expanded="false"><i></i><i></i></button>
+</header>
+
+<main id="top">
+<!-- ========== HERO ========== -->
+<section class="hero" data-sec data-b="paint">
+  <div class="hero-bg" data-b="block" data-agent="design"><canvas id="net" class="deco"></canvas></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow" data-b="type" data-agent="copy">Образовательный центр IT-направлений</span>
+      <h1>
+        <span data-b="type" data-agent="copy">Этот сайт</span>
+        <span data-b="type" data-agent="copy">строят <span class="grad">ИИ-агенты.</span></span>
+        <span data-b="type" data-agent="copy">Мы учим тех,</span>
+        <span data-b="type" data-agent="copy">кто ими <span class="grad">управляет.</span></span>
+      </h1>
+      <p class="lead" data-b="type" data-agent="writer">CICT Academy — программирование, робототехника и цифровые навыки для детей и взрослых. Пока вы читаете, девять агентов достраивают страницу под вами. Листайте — они не отстанут.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#contact" data-b="block" data-agent="ui"><span class="deco">Записаться на курс →</span></a>
+        <a class="btn" href="#courses" data-b="block" data-agent="ui"><span class="deco">Смотреть направления</span></a>
+      </div>
+      <div class="stats">
+        <div class="stat" data-b="block" data-name="stat" data-agent="ui"><b class="deco grad">10</b><span class="deco">направлений: от Scratch до кибербезопасности</span></div>
+        <div class="stat" data-b="block" data-name="stat" data-agent="ui"><b class="deco grad">7 → 77</b><span class="deco">учиться никогда не рано и не поздно</span></div>
+        <div class="stat" data-b="block" data-name="stat" data-agent="ui"><b class="deco grad">9</b><span class="deco">ИИ-агентов собрали этот сайт</span></div>
+      </div>
+    </div>
+    <div class="logo-stage" data-b="logo">
+      <div class="stage-head"><i></i><i></i><i></i>&nbsp;logo.svg<em>Logo·Agent</em></div>
+      <div class="stage-body">
+        <span class="stage-cap" id="stageCap">ожидание задачи…</span>
+        <svg class="mark" viewBox="0 0 120 120" aria-label="Логотип CICT Academy">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#8b5cf6"/><stop offset="1" stop-color="#f472b6"/></linearGradient></defs>
+          <g class="draft d1">
+            <path pathLength="1" d="M60 18a42 42 0 1 1-.01 0"/>
+            <path pathLength="1" d="M60 36L82 76H38Z"/>
+            <path class="x" pathLength="1" d="M22 98L98 22"/>
+          </g>
+          <g class="draft d2">
+            <path pathLength="1" d="M22 22H98V98H22Z"/>
+            <path pathLength="1" d="M22 22L98 98M98 22L22 98"/>
+            <path class="x" pathLength="1" d="M14 104L106 16"/>
+          </g>
+          <path class="hexfill" d="M60 8L105 34V86L60 112L15 86V34Z"/>
+          <g class="final">
+            <path pathLength="1" d="M60 8L105 34V86L60 112L15 86V34Z"/>
+            <path pathLength="1" d="M80 44A24 24 0 1 0 80 76"/>
+            <path pathLength="1" d="M60 50V70"/>
+            <path class="thin" pathLength="1" d="M80 44L92 36M80 76L92 84"/>
+            <path class="thin" pathLength="1" d="M96 36a4 4 0 1 1-8 0a4 4 0 1 1 8 0M96 84a4 4 0 1 1-8 0a4 4 0 1 1 8 0"/>
+          </g>
+        </svg>
+        <div class="wordmark"><b class="grad">CICT</b><span>ACADEMY</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MARQUEE ========== -->
+<section class="marquee" data-sec data-b="paint">
+  <div class="mq-track" data-b="block" data-name="marquee / направления" data-agent="design">
+    <span>Frontend</span><span>Backend</span><span class="st">✦</span><span>Python</span><span>Кибербезопасность</span><span class="st">✦</span><span>Scratch</span><span>Robotech</span><span class="st">✦</span><span>Математика</span><span>Языки</span><span class="st">✦</span><span>Шахматы</span><span>Грамотность</span><span class="st">✦</span>
+    <span>Frontend</span><span>Backend</span><span class="st">✦</span><span>Python</span><span>Кибербезопасность</span><span class="st">✦</span><span>Scratch</span><span>Robotech</span><span class="st">✦</span><span>Математика</span><span>Языки</span><span class="st">✦</span><span>Шахматы</span><span>Грамотность</span><span class="st">✦</span>
+  </div>
+</section>
+
+<!-- ========== MANIFESTO ========== -->
+<section id="manifest" data-sec data-b="paint">
+  <div class="wrap">
+    <span class="eyebrow" data-b="type">Эпоха агентов</span>
+    <p class="big-quote"><span data-b="type" data-agent="copy">Люди больше не делают рутину. Её делают агенты.</span> <span data-b="type" data-agent="copy"><span class="grad">Выигрывает тот, кто умеет ставить им задачи.</span></span></p>
+    <p class="lead" data-b="type" data-agent="writer">Скорость печати больше не решает. Решает понимание: как устроена система, что спросить, как проверить результат и где агент ошибся. Это фундамент — логика, код, математика, язык. Ему мы и учим.</p>
+    <div class="era">
+      <div class="era-card" data-b="block" data-name="card / вчера">
+        <span class="k" data-b="type">Вчера</span>
+        <h3 data-b="type">Человек = исполнитель</h3>
+        <p data-b="type">Каждая строка кода руками. Недели на рутину, которая не требует головы.</p>
+        <span class="num deco">01</span>
+      </div>
+      <div class="era-card" data-b="block" data-name="card / сегодня">
+        <span class="k" data-b="type">Сегодня</span>
+        <h3 data-b="type">Агенты = исполнители</h3>
+        <p data-b="type">Пишут, рисуют, тестируют и не устают. Но им по-прежнему нужен тот, кто знает, что строить.</p>
+        <span class="num deco">02</span>
+      </div>
+      <div class="era-card hl" data-b="block" data-name="card / cict">
+        <span class="k" data-b="type">В CICT Academy</span>
+        <h3 data-b="type">Вы = архитектор</h3>
+        <p data-b="type">Получаете фундамент, чтобы управлять агентами, а не конкурировать с ними.</p>
+        <span class="num deco">03</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COURSES ========== -->
+<section id="courses" data-sec data-b="paint">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow" data-b="type">Направления</span>
+        <h2 data-b="type">Десять дорог в цифровой мир</h2>
+        <p class="lead" data-b="type" data-agent="writer">От первой игры на Scratch до серверов и защиты систем. Подберём направление под возраст и цель.</p>
+      </div>
+      <div class="filters" data-b="block" data-agent="ui" data-name="filters">
+        <button class="deco on" data-f="all" type="button">Все</button>
+        <button class="deco" data-f="it" type="button">IT</button>
+        <button class="deco" data-f="kids" type="button">Детям</button>
+        <button class="deco" data-f="base" type="button">База</button>
+      </div>
+    </div>
+
+    <div class="courses">
+      <article class="course wide" data-k="it" style="--cc:#22d3ee" data-b="block" data-name="course / frontend">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5.5l-3 13"/></svg></div>
+        <span class="c-tag deco">IT</span>
+        <h3 data-b="type">Frontend</h3>
+        <p data-b="type">HTML, CSS, JavaScript. Интерфейсы, которые хочется трогать, — как этот сайт.</p>
+      </article>
+      <article class="course" data-k="it" style="--cc:#8b5cf6" data-b="block" data-name="course / backend">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></div>
+        <span class="c-tag deco">IT</span>
+        <h3 data-b="type">Backend</h3>
+        <p data-b="type">Серверы, базы данных, API — всё, что работает за кадром.</p>
+      </article>
+      <article class="course" data-k="it" style="--cc:#fbbf24" data-b="block" data-name="course / python">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><path d="M12 3c-3 0-4 1.2-4 3v2.5h4.5M8 8.5H6c-2 0-3 1.6-3 3.5s1 3.5 3 3.5h1.5M16 15.5h2c2 0 3-1.6 3-3.5s-1-3.5-3-3.5h-1.5M12 21c3 0 4-1.2 4-3v-2.5h-4.5M8 15.5V13c0-1 .8-2 2-2h4c1.2 0 2-1 2-2V6c0-1.8-1.5-3-4-3"/><circle cx="10.5" cy="5.6" r=".6"/><circle cx="13.5" cy="18.4" r=".6"/></svg></div>
+        <span class="c-tag deco">IT</span>
+        <h3 data-b="type">Python</h3>
+        <p data-b="type">Первый язык программиста и главный язык искусственного интеллекта.</p>
+      </article>
+      <article class="course" data-k="it" style="--cc:#f472b6" data-b="block" data-name="course / cybersecurity">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <span class="c-tag deco">IT</span>
+        <h3 data-b="type">Кибербезопасность</h3>
+        <p data-b="type">Как защищать системы и думать как тот, кто их проверяет.</p>
+      </article>
+      <article class="course" data-k="kids" style="--cc:#fb923c" data-b="block" data-name="course / scratch">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="10" rx="4"/><path d="M8 11v4M6 13h4"/><circle cx="15.5" cy="12" r="1"/><circle cx="18" cy="14.5" r="1"/></svg></div>
+        <span class="c-tag deco">Детям</span>
+        <h3 data-b="type">Scratch</h3>
+        <p data-b="type">Первое программирование: игры, мультфильмы и логика — без скучных формул.</p>
+      </article>
+      <article class="course" data-k="kids" style="--cc:#a3e635" data-b="block" data-name="course / robotech">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4.5V8M9.5 13h.01M14.5 13h.01M9.5 16h5M3 12v3M21 12v3"/><circle cx="12" cy="3.5" r="1"/></svg></div>
+        <span class="c-tag deco">Детям</span>
+        <h3 data-b="type">Robotech</h3>
+        <p data-b="type">Робототехника: собираем, программируем, запускаем — и смотрим, как оживает.</p>
+      </article>
+      <article class="course" data-k="base" style="--cc:#5eead4" data-b="block" data-name="course / math">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><path d="M4 7h6M7 4v6M14 7h6M5 15l4 4M9 15l-4 4M14 16h6M14 19h6"/></svg></div>
+        <span class="c-tag deco">База</span>
+        <h3 data-b="type">Математика</h3>
+        <p data-b="type">Фундамент любой технологии. Без неё агенты — просто магия.</p>
+      </article>
+      <article class="course" data-k="base" style="--cc:#60a5fa" data-b="block" data-name="course / languages">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
+        <span class="c-tag deco">База</span>
+        <h3 data-b="type">Языки</h3>
+        <p data-b="type">Английский открывает документацию, курсы и весь мир IT.</p>
+      </article>
+      <article class="course" data-k="base" style="--cc:#c084fc" data-b="block" data-name="course / literacy">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg></div>
+        <span class="c-tag deco">База</span>
+        <h3 data-b="type">Грамотность</h3>
+        <p data-b="type">Ясно пишешь — ясно думаешь. И ставишь агентам точные задачи.</p>
+      </article>
+      <article class="course wide" data-k="base kids" style="--cc:#e2e8f0" data-b="block" data-name="course / chess">
+        <div class="c-ico deco"><svg viewBox="0 0 24 24"><path d="M6 21h12M8 21l.6-3h6.8l.6 3M9 18c0-3 1-4 1-6H8.5c-.8 0-1.3-.9-.8-1.6L12 4.5l1 1.5c2.5 1 4 3.5 4 6.5 0 2-.6 3.8-1.6 5.5"/><path d="M12.5 8.5h.01"/></svg></div>
+        <span class="c-tag deco">Детям · База</span>
+        <h3 data-b="type">Шахматы</h3>
+        <p data-b="type">Стратегия и расчёт на несколько ходов вперёд — ровно то, чем занят хороший инженер.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== AGENTS ROOM ========== -->
+<section id="room" data-sec data-b="paint">
+  <div class="wrap">
+    <span class="eyebrow" data-b="type">Планёрка агентов</span>
+    <h2 data-b="type">Как строился этот сайт</h2>
+    <p class="lead" data-b="type" data-agent="writer">Без дизайнера, без верстальщика, без копирайтера. Только задача, девять агентов и один человек, который сказал «сделайте офигенно».</p>
+    <div class="room">
+      <div class="panel" data-b="block" data-agent="design" data-name="panel / chat">
+        <div class="panel-head deco"># cict-site-build <span class="live">в эфире</span></div>
+        <div class="chat">
+          <div class="msg" style="--mc:#f472b6" data-b="block" data-agent="design"><span class="av deco">DS</span><div><b class="deco">Design·Agent</b><p data-b="type" data-agent="design">Палитра: глубокий космос и неон. Технологии должны выглядеть как будущее.</p></div></div>
+          <div class="msg" style="--mc:#22d3ee" data-b="block" data-agent="design"><span class="av deco">CP</span><div><b class="deco">Copy·Agent</b><p data-b="type" data-agent="copy">Пишу заголовки. Правило одно: ни разу не использовать слово «инновационный».</p></div></div>
+          <div class="msg" style="--mc:#a78bfa" data-b="block" data-agent="design"><span class="av deco">LG</span><div><b class="deco">Logo·Agent</b><p data-b="type" data-agent="logo">Логотип утверждён с третьей попытки. Первые две были… смелыми.</p></div></div>
+          <div class="msg" style="--mc:#a3e635" data-b="block" data-agent="design"><span class="av deco">UI</span><div><b class="deco">UI·Agent</b><p data-b="type" data-agent="ui">Кнопка «Записаться» — самая заметная на странице. Это не обсуждается.</p></div></div>
+          <div class="msg" style="--mc:#5eead4" data-b="block" data-agent="design"><span class="av deco">WR</span><div><b class="deco">Writer·Agent</b><p data-b="type" data-agent="writer">А в конце — призыв. Решения всё ещё принимают люди. Пусть примут правильное.</p></div></div>
+        </div>
+      </div>
+      <div class="panel" data-b="block" data-agent="design" data-name="panel / editor">
+        <div class="panel-head deco">student.ts — Code·Agent <span class="live">пишет</span></div>
+<pre class="code"><span class="ln" data-b="type" data-agent="code"><span class="tk-c">// cict-academy / student.ts</span></span><span class="ln" data-b="type" data-agent="code"><span class="tk-k">import</span> { Academy } <span class="tk-k">from</span> <span class="tk-s">"cict"</span>;</span><span class="ln"></span><span class="ln" data-b="type" data-agent="code"><span class="tk-k">const</span> student = Academy.<span class="tk-f">enroll</span>({</span><span class="ln" data-b="type" data-agent="code">  name: <span class="tk-s">"Ты"</span>,</span><span class="ln" data-b="type" data-agent="code">  track: [<span class="tk-s">"Python"</span>, <span class="tk-s">"Frontend"</span>, <span class="tk-s">"Robotech"</span>],</span><span class="ln" data-b="type" data-agent="code">});</span><span class="ln"></span><span class="ln" data-b="type" data-agent="code"><span class="tk-k">while</span> (!student.<span class="tk-f">isReady</span>()) {</span><span class="ln" data-b="type" data-agent="code">  student.<span class="tk-f">learn</span>();</span><span class="ln" data-b="type" data-agent="code">  student.<span class="tk-f">practice</span>();</span><span class="ln" data-b="type" data-agent="code">  student.<span class="tk-f">askMentor</span>();</span><span class="ln" data-b="type" data-agent="code">}</span><span class="ln"></span><span class="ln" data-b="type" data-agent="code">student.<span class="tk-f">lead</span>(agents, <span class="tk-n">9</span>); <span class="tk-c">// ✓ будущее собрано</span></span></pre>
+        <div class="build-ok" data-b="block" data-agent="code"><span class="deco">✓ build passed · 0 ошибок · 0 людей у клавиатуры</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PATH ========== -->
+<section id="path" data-sec data-b="paint">
+  <div class="wrap steps-wrap" data-b="block" data-agent="design">
+    <span class="eyebrow" data-b="type">Путь студента</span>
+    <h2 data-b="type">От «а что это?» до «я это сделал»</h2>
+    <div class="steps">
+      <div class="step" data-b="block" data-name="step 1"><span class="n deco">01</span><h3 data-b="type">Знакомство</h3><p data-b="type">Пишете нам в чат — подбираем направление под возраст, уровень и цель.</p></div>
+      <div class="step" data-b="block" data-name="step 2"><span class="n deco">02</span><h3 data-b="type">Фундамент</h3><p data-b="type">Логика, алгоритмы и первые собственные проекты — с первых занятий.</p></div>
+      <div class="step" data-b="block" data-name="step 3"><span class="n deco">03</span><h3 data-b="type">Практика</h3><p data-b="type">Реальные задачи, работа в команде и современные ИИ-инструменты.</p></div>
+      <div class="step" data-b="block" data-name="step 4"><span class="n deco">04</span><h3 data-b="type">Результат</h3><p data-b="type">Портфолио проектов и уверенность: агентами управляете вы.</p></div>
+    </div>
+    <div class="step-line"></div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section id="contact" data-sec data-b="paint">
+  <div class="wrap">
+    <div class="cta-box" data-b="block" data-agent="design" data-name="cta">
+      <span class="eyebrow" data-b="type">Финальный блок</span>
+      <h2><span data-b="type" data-agent="copy">Агенты закончили.</span><br><span data-b="type" data-agent="copy"><span class="grad">Ваш ход.</span></span></h2>
+      <p class="lead" data-b="type" data-agent="writer">Напишите нам — расскажем о направлениях, расписании и подберём курс для вас или вашего ребёнка.</p>
+      <div class="cta-row">
+        <!-- Ссылки взяты из профиля Instagram @cict_academy -->
+        <a class="btn primary" href="https://icont.me/cict_chat" target="_blank" rel="noopener" data-b="block" data-agent="ui"><span class="deco">Написать в чат →</span></a>
+        <a class="btn" href="https://www.instagram.com/cict_academy/" target="_blank" rel="noopener" data-b="block" data-agent="ui"><span class="deco">Instagram @cict_academy</span></a>
+      </div>
+      <!-- TODO: добавьте телефон и адрес центра (в Instagram они в разделах «Контакты» и «Адрес») -->
+      <div class="contacts" data-b="block" data-agent="ui">
+        <a class="deco" href="https://www.instagram.com/cict_academy/" target="_blank" rel="noopener">◎ instagram.com/cict_academy</a>
+        <a class="deco" href="https://icont.me/cict_chat" target="_blank" rel="noopener">✉ icont.me/cict_chat</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer data-sec data-b="paint">
+  <div class="wrap foot">
+    <span>© 2026 CICT Academy · Образовательный центр IT-направлений</span>
+    <span class="mono" id="buildInfo">сборка продолжается…</span>
+    <button id="rebuild" type="button">↻ Пересобрать сайт</button>
+  </div>
+</footer>
+
+<script>
+(() => {
+  'use strict';
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const short = (s, n = 34) => s.length > n ? s.slice(0, n - 1) + '…' : s;
+
+  let instant = matchMedia('(prefers-reduced-motion: reduce)').matches || /[?&]fast\b/.test(location.search);
+  const isMob = () => innerWidth < 720;
+  let t0 = performance.now();
+
+  /* ---------- agents ---------- */
+  const AGENTS = [
+    { id:'logo',   name:'Logo·Agent',   color:'#a78bfa' },
+    { id:'copy',   name:'Copy·Agent',   color:'#22d3ee' },
+    { id:'writer', name:'Writer·Agent', color:'#5eead4' },
+    { id:'ui',     name:'UI·Agent',     color:'#a3e635' },
+    { id:'design', name:'Design·Agent', color:'#f472b6' },
+    { id:'code',   name:'Code·Agent',   color:'#fbbf24' },
+    { id:'theme',  name:'Theme·Agent',  color:'#fb923c' },
+    { id:'layout', name:'Layout·Agent', color:'#e879f9' },
+    { id:'editor', name:'Editor·Agent', color:'#60a5fa' },
+  ];
+  const byId = {};
+  const layer = $('#agents');
+  AGENTS.forEach(a => {
+    const el = document.createElement('div');
+    el.className = 'agent';
+    el.style.setProperty('--c', a.color);
+    el.style.opacity = '0';
+    el.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 2l7.5 19 2.6-7.9L21 10.5z"/></svg><div class="tag"><b>${a.name}</b><span>инициализация…</span></div>`;
+    layer.appendChild(el);
+    Object.assign(a, { el, st: el.querySelector('.tag span'), x: innerWidth / 2, y: innerHeight / 2,
+      queue: [], busy: false, point: null, idle: null, lerp: .16 });
+    byId[a.id] = a;
+  });
+  const status = (a, t) => { a.st.textContent = t; };
+  // phones: agents work slower and the queue speeds them up less, so the build is watchable
+  const SLOW = () => isMob() ? 1.75 : 1.3;
+  const spd = a => 1 + a.queue.length / (isMob() ? 12 : 5);
+
+  function newIdle(a) {
+    if (isMob()) { // on phones idle agents park along the right edge, out of the text
+      a.idle = { x: innerWidth - 24, y: innerHeight * .2 + AGENTS.indexOf(a) * 28 };
+      return;
+    }
+    a.idle = { x: .55 * innerWidth + Math.random() * .35 * innerWidth,
+               y: 90 + Math.random() * (innerHeight - 220) };
+  }
+  AGENTS.forEach(newIdle);
+  setInterval(() => AGENTS.forEach(a => { if (!a.point && Math.random() < .6) newIdle(a); }), 2200);
+
+  function frame() {
+    for (const a of AGENTS) {
+      const p = a.point ? a.point() : a.idle;
+      if (!p) continue;
+      const tx = clamp(p.x, 4, innerWidth - 26), ty = clamp(p.y, 4, innerHeight - 30);
+      a.x += (tx - a.x) * a.lerp; a.y += (ty - a.y) * a.lerp;
+      a.el.style.transform = `translate3d(${a.x}px,${a.y}px,0)`;
+      a.el.classList.toggle('flip', a.x > innerWidth - (isMob() ? 130 : 200));
+      a.el.classList.toggle('idle', !a.point);
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  async function waitArrive(a, max) {
+    const end = performance.now() + max;
+    while (performance.now() < end) {
+      const p = a.point(); if (!p) return;
+      if (Math.hypot(clamp(p.x, 4, innerWidth - 26) - a.x, clamp(p.y, 4, innerHeight - 30) - a.y) < 14) return;
+      await sleep(30);
+    }
+  }
+  function ripple(a) {
+    const r = document.createElement('div');
+    r.className = 'ripple'; r.style.setProperty('--c', a.color);
+    r.style.left = a.x + 'px'; r.style.top = a.y + 'px';
+    document.body.appendChild(r); setTimeout(() => r.remove(), 650);
+  }
+
+  /* ---------- log / progress ---------- */
+  const logEl = $('#log');
+  function log(a, msg) {
+    const li = document.createElement('li');
+    li.innerHTML = `<b style="color:${a ? a.color : '#a3e635'}">${a ? a.name : 'swarm'}</b> ${esc(msg)}`;
+    logEl.prepend(li);
+    while (logEl.children.length > 6) logEl.lastChild.remove();
+  }
+  const items = $$('[data-b]');
+  const total = items.length;
+  let built = 0, finished = false;
+  function progress() {
+    const p = Math.round(built / total * 100);
+    $('#pct').textContent = p + '%';
+    $('#bar').style.width = p + '%';
+    if (built >= total && !finished) {
+      finished = true;
+      const sec = ((performance.now() - t0) / 1000).toFixed(1);
+      $('#hud').classList.add('done');
+      $('#hurry').remove();
+      log(null, `✓ сайт собран за ${sec} с. Люди могут идти учиться.`);
+      $('#buildInfo').textContent = `Собрано 9 ИИ-агентами за ${sec} с · ${total} задач · людей у клавиатуры: 0`;
+      AGENTS.forEach(a => status(a, 'готово ✓'));
+      if (isMob()) setTimeout(() => $('#hud').classList.add('hidden'), 3500);
+    }
+  }
+
+  /* ---------- prepare elements ---------- */
+  items.forEach((el, i) => {
+    el._done = new Promise(r => (el._res = r));
+    if (el.dataset.b === 'paint') {
+      const layer = document.createElement('div');
+      layer.className = 'paint'; layer.setAttribute('aria-hidden', 'true');
+      const odd = i % 2;
+      layer.style.cssText = `--gx:${odd ? 10 : 88}%;--gy:${odd ? 30 : 0}%;--hx:${odd ? 100 : 0}%`;
+      el.prepend(layer);
+    }
+    if (el.dataset.b === 'type') {
+      el._html = el.innerHTML;
+      el._text = el.closest('pre') ? el.textContent : el.textContent.replace(/\s+/g, ' ').trim();
+      el.innerHTML = `<span class="ghost">${esc(el._text)}</span>`;
+    }
+  });
+
+  function markDone(el) {
+    if (el._built) return;
+    el._built = true;
+    if (el.dataset.b === 'type') el.innerHTML = el._html;
+    el.classList.add('built');
+    el._res(); built++; progress();
+  }
+
+  /* ---------- routing ---------- */
+  let flip = 0, pflip = 0;
+  const BLOCKERS = ['ui', 'design', 'layout'];
+  function agentFor(el) {
+    if (el.dataset.agent) return byId[el.dataset.agent];
+    const t = el.dataset.b;
+    if (t === 'logo') return byId.logo;
+    if (t === 'paint') return byId.theme;
+    if (t === 'type') return /^(H\d|SPAN)$/.test(el.tagName) ? byId.copy : (pflip++ % 2 ? byId.editor : byId.writer);
+    return byId[BLOCKERS[flip++ % 3]];
+  }
+
+  const ptOf = el => {
+    const r = el.getBoundingClientRect();
+    return { x: r.left + Math.min(r.width * .5, 48), y: r.top + Math.min(r.height * .5, 28) };
+  };
+
+  /* ---------- tasks ---------- */
+  function rafLoop(dur, fn) {
+    return new Promise(res => {
+      const s = performance.now();
+      const step = now => { const k = Math.min(1, (now - s) / dur); fn(k); k < 1 ? requestAnimationFrame(step) : res(); };
+      requestAnimationFrame(step);
+    });
+  }
+
+  async function doType(a, el) {
+    const full = el._text;
+    el.innerHTML = '';
+    const t = document.createElement('span'), c = document.createElement('span'), g = document.createElement('span');
+    c.className = 'caret'; g.className = 'ghost'; g.textContent = full;
+    el.append(t, c, g);
+    a.lerp = .3;
+    a.point = () => { const r = c.getBoundingClientRect(); return { x: r.right + 1, y: r.bottom - 6 }; };
+    const dur = Math.min(1700, 220 + full.length * 17) * SLOW() / spd(a);
+    await rafLoop(dur, k => {
+      if (el._built) return;
+      const n = Math.round(full.length * k);
+      t.textContent = full.slice(0, n); g.textContent = full.slice(n);
+    });
+  }
+
+  async function doBlock(a, el) {
+    const dur = Math.max(380, 850 / spd(a)) * SLOW();
+    const sc = document.createElement('div');
+    sc.className = 'scan'; sc.style.setProperty('--d', dur + 'ms');
+    el.appendChild(sc);
+    const s = performance.now();
+    a.lerp = .22;
+    a.point = () => {
+      const r = el.getBoundingClientRect(), k = Math.min(1, (performance.now() - s) / dur);
+      return { x: r.left + r.width * k, y: r.top + Math.min(r.height, 400) * (.25 + .5 * Math.sin(k * Math.PI)) };
+    };
+    await sleep(dur);
+    sc.remove();
+  }
+
+  // Theme·Agent: wipes the dark background over a blank white section
+  async function doPaint(a, el) {
+    const layer = el.querySelector(':scope > .paint');
+    const dur = 1250 * SLOW() / spd(a);
+    const sc = document.createElement('div');
+    sc.className = 'scan'; sc.style.setProperty('--d', dur + 'ms');
+    el.appendChild(sc);
+    layer.animate([{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)' }],
+      { duration: dur, fill: 'forwards', easing: 'linear' });
+    const s = performance.now();
+    a.lerp = .3;
+    a.point = () => {
+      const r = el.getBoundingClientRect(), k = Math.min(1, (performance.now() - s) / dur);
+      const top = Math.max(r.top, 0), bot = Math.min(r.bottom, innerHeight);
+      return { x: r.left + r.width * k, y: top + (bot - top) * (.5 + .3 * Math.sin(k * Math.PI * 4)) };
+    };
+    await sleep(dur);
+    sc.remove();
+  }
+
+  function drawPath(a, p, dur) {
+    dur = dur * SLOW() / spd(a);
+    const L = p.getTotalLength(), s = performance.now();
+    a.lerp = .35;
+    a.point = () => {
+      const k = Math.min(1, (performance.now() - s) / dur);
+      const pt = p.getPointAtLength(L * k), m = p.getScreenCTM();
+      return { x: pt.x * m.a + pt.y * m.c + m.e, y: pt.x * m.b + pt.y * m.d + m.f };
+    };
+    return p.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }],
+      { duration: dur, fill: 'forwards', easing: 'ease-in-out' }).finished;
+  }
+
+  async function doLogo(a, el) {
+    const cap = $('#stageCap');
+    const drafts = [
+      ['концепт A: круг + треугольник', 'концепт A — слишком скучно ✗'],
+      ['концепт B: квадрат CICT', 'концепт B — не наш вайб ✗'],
+    ];
+    for (let i = 0; i < 2; i++) {
+      const g = el.querySelector('.d' + (i + 1));
+      cap.textContent = drafts[i][0] + '…'; status(a, drafts[i][0]); log(a, 'генерирует ' + drafts[i][0]);
+      for (const p of g.querySelectorAll('path:not(.x)')) { if (el._built) return; await drawPath(a, p, 520); }
+      await sleep(220);
+      await drawPath(a, g.querySelector('.x'), 260);
+      cap.textContent = drafts[i][1]; log(a, drafts[i][1]);
+      await g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 320, fill: 'forwards' }).finished;
+    }
+    cap.textContent = 'концепт C: гексагон + схема «C» …'; status(a, 'финальный логотип');
+    log(a, 'рисует финальный логотип');
+    const fin = [...el.querySelectorAll('.final path')];
+    for (const [i, p] of fin.entries()) { if (el._built) return; await drawPath(a, p, i ? 480 : 1000); }
+    cap.textContent = 'концепт C — утверждён ✓';
+    log(a, 'логотип CICT Academy утверждён ✓');
+  }
+
+  async function run(a, el) {
+    if (el._built) return;
+    const parent = el.parentElement && el.parentElement.closest('[data-b]');
+    if (parent && !parent._built) {
+      status(a, 'ждёт ' + (parent._agent ? parent._agent.name : 'блок'));
+      a.point = null;
+      await Promise.race([parent._done, sleep(9000)]);
+    }
+    if (el._built) return;
+    const r = el.getBoundingClientRect();
+    const visible = r.width > 0 && r.bottom > -60 && r.top < innerHeight + 60;
+    if (instant || !visible) { markDone(el); return; }
+
+    el.style.setProperty('--ac', a.color);
+    a.lerp = .16;
+    a.point = () => ptOf(el);
+    const t = el.dataset.b;
+    if (t === 'type') { status(a, '✎ «' + short(el._text, 26) + '»'); if (el._text.length > 24 || a.queue.length < 2) log(a, 'пишет «' + short(el._text) + '»'); }
+    else if (t === 'block') { const n = el.dataset.name || 'блок'; status(a, '▦ собирает ' + n); if (el.dataset.name) log(a, 'собирает ' + n); }
+    else if (t === 'paint') { const n = el.id || el.className.split(' ')[0] || el.tagName.toLowerCase(); status(a, '🎨 красит фон: ' + n); log(a, 'красит фон секции «' + n + '»'); }
+    await waitArrive(a, 650 * SLOW() / spd(a));
+    ripple(a);
+    if (t === 'type') await doType(a, el);
+    else if (t === 'logo') await doLogo(a, el);
+    else if (t === 'paint') await doPaint(a, el);
+    else await doBlock(a, el);
+    markDone(el);
+  }
+
+  async function pump(a) {
+    if (a.busy) return;
+    a.busy = true;
+    while (a.queue.length) {
+      const el = a.queue.shift();
+      try { await run(a, el); } catch (e) { markDone(el); }
+    }
+    a.busy = false; a.point = null; a.lerp = .06; newIdle(a);
+    if (!finished) status(a, 'жду задачу…');
+  }
+
+  function enqueue(list, label) {
+    list = list.filter(el => !el._q)
+      .sort((x, y) => (x.compareDocumentPosition(y) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1);
+    if (!list.length) return;
+    list.forEach(el => { el._q = 1; el._agent = agentFor(el); el._agent.queue.push(el); });
+    if (label) log(null, `${label} → ${list.length} задач в очереди`);
+    AGENTS.forEach(pump);
+  }
+  function enqueueSection(sec) {
+    const name = sec.id || (sec.tagName === 'HEADER' ? 'nav' : sec.className.split(' ')[0] || 'section');
+    enqueue([...(sec.matches('[data-b]') ? [sec] : []), ...$$('[data-b]', sec)], `секция «${name}»`);
+  }
+
+  function finishAll() {
+    instant = true;
+    AGENTS.forEach(a => { a.queue.length = 0; });
+    items.forEach(markDone);
+  }
+
+  /* ---------- boot ---------- */
+  let booted = false;
+  function startSwarm() {
+    if (booted) return; booted = true;
+    if (instant) $('#boot').style.transition = 'none';
+    $('#boot').classList.add('gone');
+    document.body.classList.remove('booting');
+    t0 = performance.now();
+    AGENTS.forEach((a, i) => {
+      a.x = innerWidth / 2 + Math.cos(i) * 40; a.y = innerHeight / 2 + Math.sin(i) * 40;
+      a.el.style.opacity = instant ? '0' : '1';
+      status(a, 'на позиции');
+    });
+    log(null, 'рой из 9 агентов запущен');
+    if (isMob()) {
+      // phones: sections are taller than the screen, so each block is queued only when it itself scrolls into view
+      const io = new IntersectionObserver(es => {
+        const vis = es.filter(e => e.isIntersecting).map(e => e.target);
+        vis.forEach(el => io.unobserve(el));
+        enqueue(vis);
+      }, { rootMargin: '0px 0px -10% 0px' });
+      items.forEach(el => io.observe(el));
+    } else {
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting) { io.unobserve(e.target); enqueueSection(e.target); }
+      }), { rootMargin: '0px 0px -12% 0px' });
+      $$('[data-sec]').forEach(s => io.observe(s));
+    }
+    if (instant) finishAll();
+  }
+
+  async function boot() {
+    if (instant) { startSwarm(); return; }
+    const out = $('#bootlog');
+    const typeLine = async (txt, cls = '') => {
+      const span = document.createElement('span'); if (cls) span.className = cls;
+      out.appendChild(span);
+      for (let i = 0; i <= txt.length; i += 2) { if (booted) return; span.textContent = txt.slice(0, i); await sleep(9); }
+      span.textContent = txt;
+    };
+    await typeLine('$ cict swarm init --project "CICT Academy" --mode=autonomous\n');
+    await sleep(250);
+    await typeLine('  поднимаем рой агентов…\n\n', 'dim');
+    for (const a of AGENTS) {
+      if (booted) return;
+      const row = document.createElement('span');
+      row.innerHTML = `  <b style="color:${a.color}">●</b> ${a.name.padEnd(14, ' ')}`;
+      out.appendChild(row); await sleep(170);
+      const ok = document.createElement('span'); ok.className = 'ok'; ok.textContent = 'подключён ✓\n';
+      out.appendChild(ok);
+    }
+    if (booted) return;
+    await sleep(200);
+    await typeLine('\n> задача: собрать сайт учебного центра с нуля\n');
+    await typeLine('> людей за клавиатурой: 0\n', 'dim');
+    await typeLine('> запуск… ', 'ok');
+    await sleep(650);
+    startSwarm();
+  }
+
+  $('#skip').addEventListener('click', () => { instant = true; startSwarm(); finishAll(); AGENTS.forEach(a => a.el.style.opacity = '0'); });
+  $('#hurry').addEventListener('click', () => { log(null, 'ускорение: агенты достраивают всё разом ⚡'); finishAll(); });
+  $('#rebuild').addEventListener('click', () => { window.scrollTo(0, 0); location.reload(); });
+
+  /* ---------- mobile menu ---------- */
+  const navEl = $('.nav'), burger = $('.burger');
+  burger.addEventListener('click', () => {
+    const open = navEl.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  $$('.nav nav a').forEach(a => a.addEventListener('click', () => {
+    navEl.classList.remove('open'); burger.setAttribute('aria-expanded', 'false');
+  }));
+  addEventListener('resize', () => AGENTS.forEach(a => { if (!a.point) newIdle(a); }));
+
+  /* ---------- course filters ---------- */
+  $$('.filters button').forEach(b => b.addEventListener('click', () => {
+    $$('.filters button').forEach(x => x.classList.toggle('on', x === b));
+    const f = b.dataset.f;
+    $$('.course').forEach(c => c.classList.toggle('hide', f !== 'all' && !c.dataset.k.split(' ').includes(f)));
+  }));
+
+  /* ---------- hero network canvas ---------- */
+  const cv = $('#net'), ctx = cv.getContext('2d');
+  let W = 0, H = 0, nodes = [];
+  const COLS = ['34,211,238', '139,92,246', '244,114,182'];
+  function resize() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.round(Math.min(70, W * H / 18000));
+    nodes = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3, c: COLS[Math.random() * 3 | 0] }));
+  }
+  resize(); addEventListener('resize', resize);
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  (function draw() {
+    if (scrollY < H + 200) {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of nodes) {
+        if (!still) { p.x += p.vx; p.y += p.vy; }
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+      }
+      for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 130) { ctx.strokeStyle = `rgba(${a.c},${(1 - d / 130) * .22})`; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      }
+      for (const p of nodes) { ctx.fillStyle = `rgba(${p.c},.7)`; ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, 7); ctx.fill(); }
+    }
+    requestAnimationFrame(draw);
+  })();
+
+  boot();
+})();
+</script>
+</body>
+</html>
